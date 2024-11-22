@@ -3,13 +3,11 @@ import { Provider } from 'react-redux'
 
 import { store } from './store'
 
-import Hero from './components/Hero'
-import Main from './components/main'
+import { MainPage } from './pages/'
 
 const App = () => (
 	<Provider store={store}>
-		<Hero />
-		<Main />
+		<MainPage />
 	</Provider>
 )
 {
