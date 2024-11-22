@@ -5,16 +5,16 @@ import SectionWrapper from '../../hocs/SectionWrapper'
 import InputForm from '../InputForm'
 
 const mainPorts = [
-	'21 File Transfer (FTP)',
-	'22 Secure Shell (SSH)',
-	'23 Telnet',
-	'25 Mail (SMTP)',
-	'80 Web (HTTP)',
-	'110 Mail (POP3)',
-	'143 Mail (IMAP)',
-	'443 SSL/TLS (HTTPS)',
-	'445 Microsoft (SMB)',
-	'3389 Remote (RDP)',
+	{ id: 0, content: '21 File Transfer (FTP)' },
+	{ id: 1, content: '22 Secure Shell (SSH)' },
+	{ id: 2, content: '23 Telnet' },
+	{ id: 3, content: '25 Mail (SMTP)' },
+	{ id: 4, content: '80 Web (HTTP)' },
+	{ id: 5, content: '110 Mail (POP3)' },
+	{ id: 6, content: '143 Mail (IMAP)' },
+	{ id: 7, content: '443 SSL/TLS (HTTPS)' },
+	{ id: 8, content: '445 Microsoft (SMB)' },
+	{ id: 9, content: '3389 Remote (RDP)' },
 ]
 
 const PortCard: FC<{ content: string }> = ({ content }) => {
@@ -46,8 +46,8 @@ const Main: FC = () => {
 							Основные порты:
 						</span>
 						<div className='flex flex-wrap gap-2 mt-2'>
-							{mainPorts.map(port => (
-								<PortCard content={port} />
+							{mainPorts.map(({ id, content }) => (
+								<PortCard key={id} content={content} />
 							))}
 						</div>
 					</div>
