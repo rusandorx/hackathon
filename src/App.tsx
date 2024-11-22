@@ -1,13 +1,19 @@
-import { downloadPDF } from './libs/pdf'
+// import { downloadPDF } from './libs/pdf'
+import { Provider } from 'react-redux'
 
-import './App.css'
+import { store } from './store'
 
-function App() {
-	return (
-		<>
-			<button onClick={downloadPDF}>Download</button>
-		</>
-	)
+import Hero from './components/Hero'
+import Main from './components/main'
+
+const App = () => (
+	<Provider store={store}>
+		<Hero />
+		<Main />
+	</Provider>
+)
+{
+	/* <button onClick={downloadPDF}>Download</button> */
 }
 
 export default App
