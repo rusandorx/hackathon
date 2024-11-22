@@ -1,6 +1,8 @@
-import Input from '../Input'
+import { type FC } from 'react'
 
-const InputForm = () => {
+import { Input } from '../'
+
+const InputForm: FC = () => {
 	return (
 		<form className='flex flex-col items-center justify-center rounded-md p-4'>
 			<div className='flex items-center justify-between w-full'>

@@ -1,13 +1,9 @@
-import {
-	FC,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-} from 'react'
+import { FC, useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { type RootState } from '../../store'
 import { setInputValue } from '../../store/slices/globalSlice'
-import { RootState } from '../../store'
+
 import Typewriter from 'typewriter-effect/dist/core'
 
 const inputExamples = [
@@ -31,11 +27,9 @@ const Input: FC = () => {
 		dispatch(setInputValue(e.target.value))
 	}
 
-	//
+	const input = useRef<HTMLInputElement | null>(null)
 
-	const input = useRef<HTMLInputElement>()
-
-	const customNodeCreator = useCallback(character => {
+	const customNodeCreator = useCallback((character: unknown) => {
 		// Add character to input placeholder
 		if (input.current?.placeholder) {
 			input.current.placeholder =
@@ -46,7 +40,7 @@ const Input: FC = () => {
 		return null
 	}, [])
 
-	const onRemoveNode = useCallback(({ character }) => {
+	const onRemoveNode = useCallback(() => {
 		if (input.current?.placeholder) {
 			// Remove last character from input placeholder
 			input.current.placeholder =
@@ -54,7 +48,7 @@ const Input: FC = () => {
 		}
 	}, [])
 
-	const typewriter = new Typewriter(null, {
+	new Typewriter(null, {
 		strings: inputExamples,
 		autoStart: true,
 		loop: true,
@@ -62,18 +56,6 @@ const Input: FC = () => {
 		onCreateTextNode: customNodeCreator,
 		onRemoveNode: onRemoveNode,
 	})
-
-	//
-
-	// const placeholder = new TypewriterClass(null, {
-	// 	loop: true,
-	// 	delay: 75,
-	// })
-
-	// placeholder
-	// 	.typeString('A simple yet powerful native javascript')
-	// 	.pauseFor(300)
-	// 	.start()
 
 	return (
 		<>
@@ -84,7 +66,7 @@ const Input: FC = () => {
 				type='text'
 				id='ip-address'
 				ref={input}
-				placeholder={' '}
+				placeholder=' '
 				value={data}
 				onChange={handleChange}
 				className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'

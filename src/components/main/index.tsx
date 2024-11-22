@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import SectionWrapper from '../../hocs/SectionWrapper'
 
-import InputForm from '../InputForm'
+import { InputForm } from '../'
 
 const mainPorts = [
 	{ id: 0, content: '21 File Transfer (FTP)' },
