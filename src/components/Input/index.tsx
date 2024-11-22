@@ -26,7 +26,7 @@ const Input: FC = () => {
 				id='ip-address'
 				value={data}
 				onChange={handleChange}
-				className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent rounded-md px-3 py-2 flex-1'
+				className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
 			/>
 		</>
 	)

@@ -28,7 +28,7 @@ const PortCard: FC<{ content: string }> = ({ content }) => {
 const Main: FC = () => {
 	return (
 		<main className='min-h-screen flex flex-col items-center justify-start pt-16'>
-			<div className='text-secondary container w-full bg-white flex flex-col rounded-xl border border-slate-500/40 shadow p-4'>
+			<div className='text-secondary container w-full bg-white flex flex-col rounded-xl shadow p-4'>
 				<h2 className='text-2xl font-semibold my-4'>
 					Nmap Online Port Scanner
 				</h2>

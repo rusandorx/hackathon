@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+	@apply box-border outline-primary;
+}
+
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial,
 		sans-serif;
@@ -18,7 +22,7 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	// colors
+	/* colors */
 	--primary: #35be70;
 	--secondary: #3a4763;
 	--span: #8d9eb2;
