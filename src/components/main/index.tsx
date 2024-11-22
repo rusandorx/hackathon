@@ -19,7 +19,7 @@ const mainPorts = [
 
 const PortCard: FC<{ content: string }> = ({ content }) => {
 	return (
-		<div className='py-0.5 px-1.5 rounded-lg text-sm font-light bg-slate-500/30 cursor-pointer hover:bg-slate-500/40 hover:bg-primary transition-colors'>
+		<div className='py-0.5 px-1.5 rounded-lg text-sm font-light bg-slate-500/30 cursor-pointer transition-colors'>
 			{content}
 		</div>
 	)
@@ -27,7 +27,7 @@ const PortCard: FC<{ content: string }> = ({ content }) => {
 
 const Main: FC = () => {
 	return (
-		<main className='min-h-screen flex flex-col items-center justify-start pt-16'>
+		<main className='min-h-screen mt-8 flex flex-col items-center justify-start'>
 			<div className='text-secondary container w-full bg-white flex flex-col rounded-xl shadow p-4'>
 				<h2 className='text-2xl font-semibold my-4'>
 					Nmap Online Port Scanner

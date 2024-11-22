@@ -7,7 +7,7 @@ import SectionWrapper from '../../hocs/SectionWrapper'
 import styles from './index.module.scss'
 
 const Hero: FC = () => (
-	<section className='flex items-center justify-center text-secondary h-screen'>
+	<section className='min-h-screen mt-24 text-secondary'>
 		<div className='flex items-center justify-between container mx-auto px-4 md:px-8 xl:px-16'>
 			<div className='flex-grow max-w-4xl'>
 				<h1 className='font-black text-primary text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-tight'>
