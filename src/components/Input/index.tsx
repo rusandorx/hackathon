@@ -38,7 +38,7 @@ const Input: FC = () => {
 	}, [])
 
 	useEffect(() => {
-		const d = new Typewriter(null, {
+		new Typewriter(null, {
 			strings: inputExamples,
 			autoStart: true,
 			loop: true,
@@ -46,8 +46,6 @@ const Input: FC = () => {
 			onCreateTextNode: customNodeCreator,
 			onRemoveNode: onRemoveNode,
 		})
-
-		console.log(d)
 	}, [customNodeCreator, onRemoveNode])
 
 	return (
