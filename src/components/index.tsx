@@ -5,5 +5,15 @@ import Input from './Input'
 import InputForm from './InputForm'
 import Main from './main'
 import Info from './Info'
+import YourIp from './YourIp'
 
-export { Header, Footer, Hero, Input, InputForm, Main, Info }
+export {
+	Header,
+	Footer,
+	Hero,
+	Input,
+	InputForm,
+	Main,
+	Info,
+	YourIp,
+}

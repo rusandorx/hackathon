@@ -3,7 +3,7 @@ import SectionWrapper from '../../hocs/SectionWrapper'
 
 const Info: FC = () => {
 	return (
-		<section className='mb-12 text-secondary'>
+		<section className='mt-24 mb-12 text-secondary'>
 			<div className='container mx-auto px-8 md:px-12 xl:px-16'>
 				<h3 className='font-black text-primary text-2xl sm:text-3xl md:text-3xl leading-tight'>
 					Как пользоваться нашим продуктом?
