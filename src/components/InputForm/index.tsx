@@ -6,9 +6,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface GetScanFormFields extends HTMLFormControlsCollection {
-  ip: HTMLInputElement;
+  ip?: HTMLInputElement;
+  "ip-start"?: HTMLInputElement;
+  "ip-end"?: HTMLInputElement;
+  "ip-mask"?: HTMLInputElement;
+  "ip-byte"?: HTMLInputElement;
+  "ip-format": HTMLInputElement;
   ports: HTMLInputElement;
-  'custom-ports'?: HTMLInputElement
+  "custom-ports"?: HTMLInputElement;
 }
 
 interface GetScanFormElements extends HTMLFormElement {
@@ -29,10 +34,39 @@ const InputForm: FC = () => {
     e.preventDefault();
 
     const { elements } = e.currentTarget;
-    console.log(elements)
-    const ip = elements.ip.value;
+    const ipFormat = elements["ip-format"].value;
+    const singleFieldIp = elements.ip?.value;
+    const ipStart = elements["ip-start"]?.value;
+    const ipEnd = elements["ip-end"]?.value;
+    const ipMask = elements["ip-mask"]?.value;
+    const ipByte = elements["ip-byte"]?.value;
+
+    let ip: string;
+
+    switch (ipFormat) {
+      case "single":
+      case "multiple": {
+        ip = singleFieldIp!;
+        break;
+      }
+      case "range": {
+        ip = ipStart + "-" + ipEnd;
+        break;
+      }
+      case "cidr": {
+        ip = ipMask + "/" + ipByte;
+        break;
+      }
+      default: {
+        ip = "stfu";
+        break;
+      }
+    }
+
     const portType = elements.ports.value;
-    const ports = elements['custom-ports']?.value;
+    const ports = elements["custom-ports"]?.value;
+
+    console.log({ targets: [ip], portType, ports });
 
     const response = await fetch(
       `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
@@ -98,4 +132,3 @@ const InputForm: FC = () => {
 };
 
 export default InputForm;
-
