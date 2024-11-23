@@ -29,13 +29,13 @@ const PortCard: FC<{ content: string }> = ({ content }) => {
 
 const Main: FC = () => {
 	return (
-		<main className='min-h-screen max-w-5xl mx-auto mt-8 flex flex-col items-center justify-start'>
+		<main className='min-h-screen max-w-5xl mx-auto mt-8 px-4 flex flex-col items-center justify-start'>
 			<div className='text-secondary container w-full bg-white flex flex-col rounded-xl shadow p-4'>
 				<h2 className='text-2xl font-semibold mt-4'>
 					Nmap Online Port Scanner
 				</h2>
 				<hr className='my-4' />
-				<div className='grid grid-cols-2'>
+				<div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
 					<p className=''>
 						Выполните бесплатное сканирование портов, чтобы
 						проверить любой IP-адрес и протестировать 10 общих
