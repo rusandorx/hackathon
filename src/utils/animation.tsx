@@ -8,7 +8,29 @@ export const inView = {
 	viewport: { once: true, amount: 0.25 },
 }
 
-export const textVariant = (delay: number) => {
+export const opacityVariant = (
+	duration: number = 0.8,
+	delay: number = 0,
+) => {
+	return {
+		hidden: {
+			opacity: 0,
+		},
+		show: {
+			opacity: 1,
+			transition: {
+				type: 'spring',
+				duration: duration,
+				delay: delay,
+			},
+		},
+	}
+}
+
+export const textVariant = (
+	duration: number = 1.25,
+	delay: number = 0,
+) => {
 	return {
 		hidden: {
 			y: -50,
@@ -19,7 +41,7 @@ export const textVariant = (delay: number) => {
 			opacity: 1,
 			transition: {
 				type: 'spring',
-				duration: 1.25,
+				duration: duration,
 				delay: delay,
 			},
 		},

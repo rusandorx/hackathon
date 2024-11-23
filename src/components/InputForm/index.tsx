@@ -1,101 +1,101 @@
-import { type FC, useRef, useState } from "react";
+import { type FC, useRef, useState } from 'react'
 
-import { Input } from "../";
-import { setScanStatus } from "../../store/slices/scanSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Input } from '../'
+import { setScanStatus } from '../../store/slices/scanSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 interface GetScanFormFields extends HTMLFormControlsCollection {
-  ip: HTMLInputElement;
-  ports: HTMLInputElement;
-  'custom-ports'?: HTMLInputElement
+	ip: HTMLInputElement
+	ports: HTMLInputElement
+	'custom-ports'?: HTMLInputElement
 }
 
 interface GetScanFormElements extends HTMLFormElement {
-  readonly elements: GetScanFormFields;
+	readonly elements: GetScanFormFields
 }
 
 const InputForm: FC = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const scanId = useRef<string | null>(null);
-  const [customPorts, setCustomPorts] = useState(false);
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const scanId = useRef<string | null>(null)
+	const [customPorts, setCustomPorts] = useState(false)
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCustomPorts(e.target.value === "custom");
-  };
+	const handleSelectChange = (
+		e: React.ChangeEvent<HTMLSelectElement>,
+	) => {
+		setCustomPorts(e.target.value === 'custom')
+	}
 
-  const handleSubmit = async (e: React.FormEvent<GetScanFormElements>) => {
-    e.preventDefault();
+	const handleSubmit = async (
+		e: React.FormEvent<GetScanFormElements>,
+	) => {
+		e.preventDefault()
 
-    const { elements } = e.currentTarget;
-    console.log(elements)
-    const ip = elements.ip.value;
-    const portType = elements.ports.value;
-    const ports = elements['custom-ports']?.value;
+		const { elements } = e.currentTarget
+		console.log(elements)
+		const ip = elements.ip.value
+		const portType = elements.ports.value
+		const ports = elements['custom-ports']?.value
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
-      {
-        method: "POST",
-        body: JSON.stringify({ targets: [ip], portType, ports }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+		const response = await fetch(
+			`${import.meta.env.VITE_API_BASE_URL ?? ''}/scans/`,
+			{
+				method: 'POST',
+				body: JSON.stringify({ targets: [ip], portType, ports }),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			},
+		)
 
-    dispatch(setScanStatus("loading"));
-    const taskId = (await response.json()).task_id;
+		dispatch(setScanStatus('loading'))
+		const taskId = (await response.json()).task_id
 
-    navigate(`/scans/${taskId}`);
+		navigate(`/scans/${taskId}`)
 
-    scanId.current = taskId;
-  };
+		scanId.current = taskId
+	}
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col items-center justify-center rounded-md p-4"
-    >
-      <div className="flex flex-col items-center flex-grow gap-2 w-full">
-        <Input />
-        <div className="flex flex-col items-center w-full">
-          <label htmlFor="ports" className="font-semibold mr-2">
-            Выберите порты
-          </label>
-          <select
-            id="ports"
-            name="ports"
-            onChange={handleSelectChange}
-            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
-          >
-            <option value="10">Топ 10 портов</option>
-            <option value="100">Топ 100 портов</option>
-            <option value="1000">Топ 1000 портов</option>
-            <option value="custom">Указать через пробел</option>
-          </select>
-          {customPorts && (
-            <input
-              id="custom-ports"
-              pattern="(\d+\s?)+"
-              name="custom-ports"
-              placeholder="80 443 8080"
-              className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mt-2"
-              required
-            />
-          )}
-        </div>
-        <button
-          type="submit"
-          className="ml-2 px-4 py-2 text-primary hover:text-white border border-primary hover:bg-primary font-medium rounded-md transition duration-150 ease-in-out"
-        >
-          Сканировать
-        </button>
-      </div>
-    </form>
-  );
-};
+	return (
+		<form
+			onSubmit={handleSubmit}
+			className='flex flex-col items-center justify-center rounded-md p-4'>
+			<div className='flex flex-col items-center flex-grow gap-2 w-full'>
+				<Input />
+				<div className='flex flex-col items-center w-full'>
+					<label htmlFor='ports' className='font-semibold mr-2'>
+						Выберите порты
+					</label>
+					<select
+						id='ports'
+						name='ports'
+						onChange={handleSelectChange}
+						className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'>
+						<option value='10'>Топ 10 портов</option>
+						<option value='100'>Топ 100 портов</option>
+						<option value='1000'>Топ 1000 портов</option>
+						<option value='custom'>Указать через пробел</option>
+					</select>
+					{customPorts && (
+						<input
+							id='custom-ports'
+							pattern='(\d+\s?)+'
+							name='custom-ports'
+							placeholder='80 443 8080'
+							className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mt-2'
+							required
+						/>
+					)}
+				</div>
+				<button
+					type='submit'
+					className='px-4 py-2 text-primary hover:text-white border border-primary hover:bg-primary font-medium rounded-md transition duration-150 ease-in-out'>
+					Сканировать
+				</button>
+			</div>
+		</form>
+	)
+}
 
-export default InputForm;
-
+export default InputForm
