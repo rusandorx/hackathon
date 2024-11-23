@@ -19,12 +19,12 @@ const mainPorts = [
 ];
 
 const PortCard: FC<{ content: string }> = ({ content }) => {
-	return (
-		<div className='py-0.5 px-1.5 rounded-lg text-sm font-light bg-slate-500/30 cursor-pointer hover:bg-slate-500/40 transition-colors'>
-			{content}
-		</div>
-	)
-}
+  return (
+    <div className="py-0.5 px-1.5 rounded-lg text-sm font-light bg-slate-500/30 cursor-pointer hover:bg-slate-500/40 transition-colors">
+      {content}
+    </div>
+  );
+};
 
 const Main: FC = () => {
   return (
@@ -51,7 +51,6 @@ const Main: FC = () => {
           </div>
         </div>
         <hr className="my-4" />
-        <ScanView />
         <InputForm />
       </div>
     </main>
