@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import PortList from "../PortList";
@@ -57,6 +57,7 @@ const ScanView = ({ id }: { id: string }) => {
   const dispatch = useDispatch();
   const scanState = useSelector((state: RootState) => state.scanSlice);
   const intervalId = useRef<number | null>(null);
+  const [expandedIp, setExpandedIp] = useState<string | null>(null);
 
   useEffect(() => {
     const stopLoading = () => {
@@ -82,20 +83,32 @@ const ScanView = ({ id }: { id: string }) => {
       return scanData;
     };
 
-    intervalId.current = setInterval(loadScan, 1000);
+    // intervalId.current = setInterval(loadScan, 1000);
     loadScan();
   }, [dispatch, id]);
+
+  const toggleExpand = (ip: string) => {
+    setExpandedIp(expandedIp === ip ? null : ip);
+  };
 
   return (
     <div className="p-4">
       <Indicator status={scanState.status} />
       {scanState.data?.ips.map((ipData) => (
-        <div key={ipData.ip} className="mb-4 p-4 border rounded-md shadow-md">
-          <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
+        <div key={ipData.ip} className="mb-4 p-4 border rounded-md shadow-md hover:cursor-pointer bg-white"
+             onClick={() => toggleExpand(ipData.ip)}
+        >
+          <h2
+            className="text-xl font-bold mb-2"
+          >
+            IP: {ipData.ip}
+          </h2>
           <p className="mb-2">PTR: {ipData.ptr}</p>
-          <div className="mb-2">
-            <PortList open={ipData.ports.open} closed={ipData.ports.closed} />
-          </div>
+          {expandedIp === ipData.ip && (
+            <div className="mb-2">
+              <PortList open={ipData.ports.open} closed={ipData.ports.closed} />
+            </div>
+          )}
         </div>
       ))}
     </div>
