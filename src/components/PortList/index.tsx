@@ -9,13 +9,13 @@ interface PortWithStatus extends Port {
 
 const Status = ({ open }: { open: boolean }) => {
   return (
-    <div className="w-full pb-2">
+    <div className={classNames("w-full pb-2", styles.status)}>
       {open ? (
-        <div className="border border-emerald-500 rounded-lg p-2 flex justify-center items-center">
+        <div className="border border-emerald-500 rounded-lg p-2 flex justify-center items-center bg-emerald-100">
           OPEN
         </div>
       ) : (
-        <div className="border border-rose-500 rounded-lg p-2 flex justify-center items-center">
+        <div className="border border-rose-500 rounded-lg p-2 flex justify-center items-center bg-rose-100">
           CLOSED
         </div>
       )}
@@ -38,7 +38,7 @@ const PortList = ({ open, closed }: { open: Port[]; closed: number[] }) => {
     <div className="grid gap-4">
       <div
         className={classNames(
-          "grid font-bold border-b-2 pb-2 gap-x-4",
+          "grid font-bold border-b-2 pb-2 gap-x-4 bg-gray-200",
           styles.portTable,
         )}
       >
@@ -58,7 +58,7 @@ const PortList = ({ open, closed }: { open: Port[]; closed: number[] }) => {
           <div
             key={port.port}
             className={classNames(
-              "grid grid-cols-5 border-b gap-4",
+              "grid grid-cols-5 border-b gap-4 p-2 bg-white hover:bg-gray-100",
               styles.portTable,
             )}
           >
@@ -73,7 +73,7 @@ const PortList = ({ open, closed }: { open: Port[]; closed: number[] }) => {
             <div>
               {port.vulnerabilities?.map((vuln, index) => (
                 <div key={index} className="ml-4">
-                  <p>Title: {vuln.title}</p>
+                  <p className="font-semibold">Title: {vuln.title}</p>
                   <p>Description: {vuln.description}</p>
                   <p>Severity: {vuln.severity}</p>
                 </div>

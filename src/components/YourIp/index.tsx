@@ -1,30 +1,30 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from "react";
 
 const YourIp: FC = () => {
-	const [localIp, setLocalIp] = useState<string>('')
-	const [fetching, setFetching] = useState(true)
+  const [localIp, setLocalIp] = useState<string>("");
+  const [fetching, setFetching] = useState(true);
 
-	useEffect(() => {
-		fetch('https://api-bdc.net/data/client-ip')
-			.then(response => {
-				if (!response.ok) return
-				return response.json()
-			})
-			.then(data => {
-				setFetching(false)
-				setLocalIp(data.ipString)
-			})
-			.catch(err => console.error(err))
-	}, [])
+  useEffect(() => {
+    fetch("https://api-bdc.net/data/client-ip", { mode: "no-cors" })
+      .then((response) => {
+        if (!response.ok) return;
+        return response.json();
+      })
+      .then((data) => {
+        setFetching(false);
+        setLocalIp(data.ipString);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
-	if (!fetching)
-		return (
-			<div className='text-md font-semibold'>
-				Your IP is&nbsp;
-				<code className='bg-slate-500/20 p-0.5 mx-0.5 rounded cursor-pointer hover:bg-slate-500/30'>
-					{localIp}
-				</code>
-			</div>
-		)
-}
-export default YourIp
+  if (!fetching)
+    return (
+      <div className="text-md font-semibold">
+        Your IP is&nbsp;
+        <code className="bg-slate-500/20 p-0.5 mx-0.5 rounded cursor-pointer hover:bg-slate-500/30">
+          {localIp}
+        </code>
+      </div>
+    );
+};
+export default YourIp;
