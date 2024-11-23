@@ -50,7 +50,7 @@ const Input: FC = () => {
 				type='text'
 				id='ip-address'
 				ref={input}
-				pattern={ipPattern}
+				// pattern={ipPattern}
 				placeholder=' '
 				name='ip'
 				className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
