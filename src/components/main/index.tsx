@@ -3,6 +3,7 @@ import { FC } from 'react'
 import SectionWrapper from '../../hocs/SectionWrapper'
 
 import { InputForm } from '../'
+import ScanView from '../ScanView'
 
 const mainPorts = [
 	{ id: 0, content: '21 File Transfer (FTP)' },
@@ -19,7 +20,7 @@ const mainPorts = [
 
 const PortCard: FC<{ content: string }> = ({ content }) => {
 	return (
-		<div className='py-0.5 px-1.5 rounded-lg text-sm font-light bg-slate-500/30 cursor-pointer transition-colors'>
+		<div className='py-0.5 px-1.5 rounded-lg text-sm font-light bg-slate-500/30 cursor-pointer hover:bg-slate-500/40 transition-colors'>
 			{content}
 		</div>
 	)
@@ -27,7 +28,7 @@ const PortCard: FC<{ content: string }> = ({ content }) => {
 
 const Main: FC = () => {
 	return (
-		<main className='min-h-screen mt-8 flex flex-col items-center justify-start'>
+		<main className='min-h-screen max-w-5xl mx-auto mt-8 flex flex-col items-center justify-start'>
 			<div className='text-secondary container w-full bg-white flex flex-col rounded-xl shadow p-4'>
 				<h2 className='text-2xl font-semibold my-4'>
 					Nmap Online Port Scanner
