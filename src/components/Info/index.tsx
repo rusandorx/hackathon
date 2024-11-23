@@ -1,6 +1,10 @@
 import { FC } from 'react'
+import { motion } from 'motion/react'
+
 import SectionWrapper from '../../hocs/SectionWrapper'
+
 import useMedia from '../../hoocs/useMedia'
+import { fadeIn, inView } from '../../utils'
 
 const infoData = [
 	{
@@ -113,19 +117,31 @@ const Info: FC = () => {
 	return (
 		<section className='mt-24 mb-12 text-secondary'>
 			<div className='container mx-auto px-4 lg:px-8 xl:px-16'>
-				<h3 className='font-black text-primary text-2xl sm:text-3xl md:text-3xl leading-tight'>
+				<motion.h3
+					{...inView}
+					variants={fadeIn('right', 'spring', 0, 1.2)}
+					className='font-black text-primary text-2xl sm:text-3xl md:text-3xl leading-tight'>
 					Как пользоваться нашим продуктом?
-				</h3>
-				<p className='mt-2 max-w-[500px]'>
+				</motion.h3>
+				<motion.p
+					{...inView}
+					variants={fadeIn('right', 'spring', 0, 1.2)}
+					className='mt-2 max-w-[500px]'>
 					Воспользуйтесь настройками и введите желаемый адрес в
 					одном из форматах, предложенных ниже:
-				</p>
+				</motion.p>
 				{media768 ? <TableMobile /> : <TableDesktop />}
 
-				<h4 className='text-xl font-semibold mt-8'>
+				<motion.h4
+					{...inView}
+					variants={fadeIn('right', 'spring', 0, 1.2)}
+					className='text-xl font-semibold mt-8'>
 					Какие источники можно почитать?
-				</h4>
-				<ul className='flex flex-col pl-2 mt-2 gap-3'>
+				</motion.h4>
+				<motion.ul
+					{...inView}
+					variants={fadeIn('right', 'spring', 0, 1.2)}
+					className='flex flex-col pl-2 mt-2 gap-3'>
 					{linksData.map(link => (
 						<li key={link.id}>
 							<a
@@ -136,7 +152,7 @@ const Info: FC = () => {
 							</a>
 						</li>
 					))}
-				</ul>
+				</motion.ul>
 			</div>
 		</section>
 	)
