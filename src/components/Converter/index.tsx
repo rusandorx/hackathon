@@ -64,22 +64,22 @@ const Converter = () => {
 	return (
 		<div className='flex items-center gap-2 md:gap-4'>
 			<div className='flex flex-col max-w-[45%]'>
+				<span className='text-sm mb-1'>Домен</span>
+				<input
+					onChange={domenChangeHandler}
+					defaultValue={'google.com'}
+					ref={domenRef}
+					className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
+				/>
+			</div>
+			<FaArrowRightArrowLeft className='mt-6 flex-shrink-0' />
+			<div className='flex flex-col max-w-[45%]'>
 				<span className='text-sm mb-1'>Ip</span>
 				<input
 					onChange={ipChangeHandler}
 					defaultValue={'172.217.215.102'}
 					pattern={ipPattern}
 					ref={ipRef}
-					className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
-				/>
-			</div>
-			<FaArrowRightArrowLeft className='mt-6 flex-shrink-0' />
-			<div className='flex flex-col max-w-[45%]'>
-				<span className='text-sm mb-1'>Домен</span>
-				<input
-					onChange={domenChangeHandler}
-					defaultValue={'google.com'}
-					ref={domenRef}
 					className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
 				/>
 			</div>
