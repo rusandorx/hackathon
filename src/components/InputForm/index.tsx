@@ -101,7 +101,10 @@ const InputForm: FC = () => {
               </button>
               <div className="w-full">
                 {ports.map((port) => (
-                  <div key={port.id} className="flex items-center mb-2">
+                  <div
+                    key={port.id}
+                    className="flex items-center justify-center mb-2"
+                  >
                     <input
                       type="number"
                       value={port.value}
@@ -109,7 +112,7 @@ const InputForm: FC = () => {
                         handlePortChange(port.id, e.target.value)
                       }
                       placeholder="Введите порт"
-                      className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mr-2 flex-grow"
+                      className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mr-2 max-w-48 flex-grow"
                       min={0}
                       max={65535}
                       required
