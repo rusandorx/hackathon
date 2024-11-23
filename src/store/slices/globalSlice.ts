@@ -1,26 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface globalState {
-	inputValue: string
+  inputValue: string;
 }
 
 const defaultState: globalState = {
-	inputValue: '',
-}
+  inputValue: "",
+};
 
-const initialState: globalState = { ...defaultState }
+const initialState: globalState = { ...defaultState };
 
 export const globalSlice = createSlice({
-	name: 'globalSlice',
-	initialState,
-	reducers: {
-		setInputValue: (state, action: PayloadAction<string>) => {
-			state.inputValue = action.payload
-		},
-	},
-})
+  name: "globalSlice",
+  initialState,
+  reducers: {
+    setInputValue: (state, action: PayloadAction<string>) => {
+      state.inputValue = action.payload;
+    },
+  },
+});
 
-export const { setInputValue } = globalSlice.actions
+export const { setInputValue } = globalSlice.actions;
 
-export default globalSlice.reducer
+export default globalSlice.reducer;
