@@ -1,12 +1,9 @@
 import { type FC, useRef } from "react";
 
 import { Input } from "../";
-import {
-  ScanData,
-  setScanData,
-  setScanStatus,
-} from "../../store/slices/scanSlice";
+import { setScanStatus } from "../../store/slices/scanSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface GetScanFormFields extends HTMLFormControlsCollection {
   ip: HTMLInputElement;
@@ -18,33 +15,17 @@ interface GetScanFormElements extends HTMLFormElement {
 
 const InputForm: FC = () => {
   const dispatch = useDispatch();
-  const intervalId = useRef<number | null>(null);
+  const navigate = useNavigate();
   const scanId = useRef<string | null>(null);
-
-  const stopLoading = () => {
-    if (intervalId.current !== null) {
-      clearInterval(intervalId.current);
-    }
-    intervalId.current = null;
-    scanId.current = null;
-    dispatch(setScanStatus("done"));
-  };
 
   const handleSubmit = async (e: React.FormEvent<GetScanFormElements>) => {
     e.preventDefault();
 
-    if (intervalId.current !== null) {
-      dispatch(setScanData(null));
-      stopLoading();
-    }
-
     const { elements } = e.currentTarget;
     const ip = elements.ip.value;
 
-    // TODO: Parse ip here
-
     const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL ?? ""}/scan/`,
+      `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
       {
         method: "POST",
         body: JSON.stringify({ targets: [ip] }),
@@ -54,21 +35,12 @@ const InputForm: FC = () => {
       },
     );
 
-    scanId.current = (await response.json()).task_id;
     dispatch(setScanStatus("loading"));
+    const taskId = (await response.json()).task_id;
 
-    intervalId.current = setInterval(async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL ?? ""}/scan/${scanId.current}`,
-      );
-      const scanData: ScanData = await response.json();
+    navigate(`/scans/${taskId}`);
 
-      dispatch(setScanData(scanData));
-
-      if (scanData?.end) {
-        stopLoading();
-      }
-    }, 500);
+    scanId.current = (await response.json()).task_id;
   };
 
   return (
