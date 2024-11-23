@@ -73,6 +73,7 @@ const InputForm: FC = () => {
       {
         method: "POST",
         body: JSON.stringify({ targets: [ip], portType, ports }),
+        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },

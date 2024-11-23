@@ -71,6 +71,7 @@ const ScanView = ({ id }: { id: string }) => {
     const loadScan = async () => {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/${id}`,
+        { mode: "no-cors" },
       );
       const scanData: ScanData = await response.json();
 
@@ -95,14 +96,12 @@ const ScanView = ({ id }: { id: string }) => {
     <div className="p-4">
       <Indicator status={scanState.status} />
       {scanState.data?.ips.map((ipData) => (
-        <div key={ipData.ip} className="mb-4 p-4 border rounded-md shadow-md hover:cursor-pointer bg-white"
-             onClick={() => toggleExpand(ipData.ip)}
+        <div
+          key={ipData.ip}
+          className="mb-4 p-4 border rounded-md shadow-md hover:cursor-pointer bg-white"
+          onClick={() => toggleExpand(ipData.ip)}
         >
-          <h2
-            className="text-xl font-bold mb-2"
-          >
-            IP: {ipData.ip}
-          </h2>
+          <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
           <p className="mb-2">PTR: {ipData.ptr}</p>
           {expandedIp === ipData.ip && (
             <div className="mb-2">
@@ -116,3 +115,4 @@ const ScanView = ({ id }: { id: string }) => {
 };
 
 export default ScanView;
+
