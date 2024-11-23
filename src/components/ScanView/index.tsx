@@ -71,7 +71,6 @@ const ScanView = ({ id }: { id: string }) => {
     const loadScan = async () => {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/${id}`,
-        { mode: "no-cors" },
       );
       const scanData: ScanData = await response.json();
 
@@ -84,7 +83,7 @@ const ScanView = ({ id }: { id: string }) => {
       return scanData;
     };
 
-    // intervalId.current = setInterval(loadScan, 1000);
+    intervalId.current = setInterval(loadScan, 1000);
     loadScan();
   }, [dispatch, id]);
 

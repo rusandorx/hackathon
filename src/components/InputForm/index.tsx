@@ -66,14 +66,11 @@ const InputForm: FC = () => {
     const portType = elements.ports.value;
     const ports = elements["custom-ports"]?.value;
 
-    console.log({ targets: [ip], portType, ports });
-
     const response = await fetch(
       `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
       {
         method: "POST",
-        body: JSON.stringify({ targets: [ip], portType, ports }),
-        mode: "no-cors",
+        body: JSON.stringify({ ip, portType, ports }),
         headers: {
           "Content-Type": "application/json",
         },
