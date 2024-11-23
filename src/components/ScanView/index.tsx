@@ -17,7 +17,6 @@ const ScanView: FC = () => {
           <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
           <p className="mb-2">PTR: {ipData.ptr}</p>
           <div className="mb-2">
-            <h3 className="text-lg font-semibold">Open Ports:</h3>
             <PortList open={ipData.ports.open} closed={ipData.ports.closed} />
           </div>
         </div>

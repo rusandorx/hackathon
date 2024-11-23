@@ -9,7 +9,7 @@ interface PortWithStatus extends Port {
 
 const Status = ({ open }: { open: boolean }) => {
   return (
-    <div>
+    <div className="w-full">
       {open ? (
         <div className="border border-emerald-500 rounded-lg p-2 flex justify-center items-center">
           OPEN
@@ -58,7 +58,7 @@ const PortList = ({ open, closed }: { open: Port[]; closed: number[] }) => {
           <div
             key={port.port}
             className={classNames(
-              "grid grid-cols-5 auto-rows-min border-b py-2 gap-x-4",
+              "grid grid-cols-5 auto-rows-min border-b py-2 gap-4",
               styles.portTable,
             )}
           >
