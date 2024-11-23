@@ -68,7 +68,6 @@ const ScanView = ({ id }: { id: string }) => {
     };
 
     const loadScan = async () => {
-      console.log("hiiii");
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/${id}`,
       );
