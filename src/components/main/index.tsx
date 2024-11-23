@@ -1,10 +1,11 @@
 import { FC } from 'react'
+import { motion } from 'motion/react'
 
 import SectionWrapper from '../../hocs/SectionWrapper'
 
-import { InputForm } from '../'
-import ScanView from '../ScanView'
-import Converter from '../Converter'
+import { InputForm, Converter } from '../'
+import { fadeIn, inView } from '../../utils'
+import { textVariant } from '../../utils/animation'
 
 const mainPorts = [
 	{ id: 0, content: '21 File Transfer (FTP)' },
@@ -31,19 +32,26 @@ const Main: FC = () => {
 	return (
 		<main className='max-w-5xl mx-auto mt-8 px-4 flex flex-col items-center justify-start'>
 			<div className='text-secondary container w-full bg-white flex flex-col rounded-xl shadow p-4'>
-				<h2 className='text-2xl text-primary font-semibold mt-4'>
+				<motion.h2
+					{...inView}
+					variants={textVariant(0.1)}
+					className='text-2xl text-primary font-semibold mt-4'>
 					Nmap Online Port Scanner
-				</h2>
+				</motion.h2>
 				<hr className='my-4' />
 				<div className='grid gap-8 grid-cols-1 md:grid-cols-2'>
-					<p className=''>
+					<motion.p
+						{...inView}
+						variants={fadeIn('right', 'spring', 0.2, 0.7)}>
 						Выполните бесплатное сканирование портов, чтобы
 						проверить любой IP-адрес и протестировать 10 общих
 						TCP-портов с включенной версией обнаружения Nmap
 						(-sV). Это быстрый и эффективный способ выявления
 						уязвимостей в вашей сети.
-					</p>
-					<div>
+					</motion.p>
+					<motion.div
+						{...inView}
+						variants={fadeIn('left', 'spring', 0.4, 0.7)}>
 						<span className='text-span text-sm'>
 							Основные порты:
 						</span>
@@ -52,16 +60,24 @@ const Main: FC = () => {
 								<PortCard key={id} content={content} />
 							))}
 						</div>
-					</div>
+					</motion.div>
 				</div>
 				<hr className=' my-4' />
-				<p className='text-md sm:text-lg mb-4'>
-					Нужно конвертировать домен в ip или наоборот?
-				</p>
-				<Converter />
+				<motion.div
+					{...inView}
+					variants={fadeIn('right', 'spring', 0.2, 1.5)}>
+					<p className='text-md sm:text-lg mb-4'>
+						Нужно конвертировать домен в ip или наоборот?
+					</p>
+					<Converter />
+				</motion.div>
 
 				<hr className='my-4' />
-				<InputForm />
+				<motion.div
+					{...inView}
+					variants={fadeIn('right', 'spring', 0.4, 1.5)}>
+					<InputForm />
+				</motion.div>
 			</div>
 		</main>
 	)

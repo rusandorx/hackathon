@@ -1,9 +1,4 @@
-import {
-	ChangeEvent,
-	useCallback,
-	useRef,
-	useState,
-} from 'react'
+import { ChangeEvent, FC, useCallback, useRef } from 'react'
 import { FaArrowRightArrowLeft } from 'react-icons/fa6'
 import { debounce } from 'lodash'
 
@@ -15,7 +10,7 @@ import { chechIpPattern } from '../../utils/regEx'
 // 	domen: string
 // }
 
-const Converter = () => {
+const Converter: FC = () => {
 	// const [state, setState] = useState<IState>({
 	// 	ip: '172.217.215.102',
 	// 	domen: 'google.com',
