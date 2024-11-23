@@ -6,7 +6,7 @@ import HeroImg from '../../assets/HeroImage.png'
 import SectionWrapper from '../../hocs/SectionWrapper'
 
 import styles from './index.module.scss'
-import { inView, fadeIn, slideIn } from '../../utils'
+import { inView, fadeIn } from '../../utils'
 
 const Hero: FC = () => (
 	<section className='min-h-screen mt-24 text-secondary'>
