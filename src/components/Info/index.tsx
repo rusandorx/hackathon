@@ -57,16 +57,26 @@ const TableDesktop: FC = () => {
 		<div className='mt-8 flex items-center bg-white rounded-md shadow p-2'>
 			<table className='info__table w-full table-fixed'>
 				<thead className='text-lg border-b'>
-					<tr>
+					<motion.tr
+						{...inView}
+						variants={fadeIn('right', 'spring', 0, 1.2)}>
 						<th>Способ задания</th>
 						<th>Описание</th>
 						<th>Пример</th>
-					</tr>
+					</motion.tr>
 				</thead>
 				<tbody className='text-center bg-white dark:bg-slate-800'>
 					{infoData.map(item => {
 						return (
-							<tr key={item.id}>
+							<motion.tr
+								{...inView}
+								variants={fadeIn(
+									'left',
+									'spring',
+									0.1 * item.id,
+									1.2,
+								)}
+								key={item.id}>
 								<td>
 									<strong>{item.type}</strong>
 								</td>
@@ -76,7 +86,7 @@ const TableDesktop: FC = () => {
 										{item.example}
 									</code>
 								</td>
-							</tr>
+							</motion.tr>
 						)
 					})}
 				</tbody>
@@ -90,7 +100,10 @@ const TableMobile: FC = () => {
 		<div>
 			{infoData.map(item => {
 				return (
-					<div key={item.id}>
+					<motion.div
+						{...inView}
+						variants={fadeIn('right', 'spring', 0, 1.2)}
+						key={item.id}>
 						<h4 className='mt-8 font-bold text-lg sm:text-xl underline'>
 							{item.type}
 						</h4>
@@ -103,7 +116,7 @@ const TableMobile: FC = () => {
 								{item.example}
 							</code>
 						</p>
-					</div>
+					</motion.div>
 				)
 			})}
 		</div>
