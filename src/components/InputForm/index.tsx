@@ -21,13 +21,27 @@ const InputForm: FC = () => {
   const intervalId = useRef<number | null>(null);
   const scanId = useRef<string | null>(null);
 
+  const stopLoading = () => {
+    if (intervalId.current !== null) {
+      clearInterval(intervalId.current);
+    }
+    intervalId.current = null;
+    scanId.current = null;
+    dispatch(setScanStatus("done"));
+  };
+
   const handleSubmit = async (e: React.FormEvent<GetScanFormElements>) => {
     e.preventDefault();
+
+    if (intervalId.current !== null) {
+      dispatch(setScanData(null));
+      stopLoading();
+    }
 
     const { elements } = e.currentTarget;
     const ip = elements.ip.value;
 
-    // TODO: Parse here
+    // TODO: Parse ip here
 
     const response = await fetch(
       `${import.meta.env.VITE_API_BASE_URL ?? ""}/scan/`,
@@ -51,14 +65,8 @@ const InputForm: FC = () => {
 
       dispatch(setScanData(scanData));
 
-      if (scanData.end) {
-        dispatch(setScanStatus("done"));
-      }
-
-      if (scanData.end && intervalId.current !== null) {
-        clearInterval(intervalId.current);
-        intervalId.current = null;
-        scanId.current = null;
+      if (scanData?.end) {
+        stopLoading();
       }
     }, 500);
   };

@@ -8,10 +8,10 @@ export interface Vulnerability {
 
 export interface Port {
   port: number;
-  protocol: string | null;
-  service: string | null;
-  version: string | null;
-  vulnerabilities: Vulnerability[];
+  protocol?: string | null;
+  service?: string | null;
+  version?: string | null;
+  vulnerabilities?: Vulnerability[];
 }
 
 export interface IpData {
@@ -23,16 +23,16 @@ export interface IpData {
   };
 }
 
-export interface ScanData {
+export type ScanData = null | {
   task_id: string;
   end: boolean;
   ips: IpData[];
-}
+};
 
 export type Status = "idle" | "loading" | "done";
 
 export interface ScanState {
-  data: ScanData | null;
+  data: ScanData;
   status: Status;
 }
 
