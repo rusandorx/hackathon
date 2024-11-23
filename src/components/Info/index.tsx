@@ -54,7 +54,7 @@ const linksData = [
 
 const TableDesktop: FC = () => {
 	return (
-		<div className='mt-8 flex items-center bg-white rounded-md shadow p-2'>
+		<div className='overflow-hidden mt-8 flex items-center bg-white rounded-md shadow p-2'>
 			<table className='info__table w-full table-fixed'>
 				<thead className='text-lg border-b'>
 					<motion.tr
@@ -65,7 +65,7 @@ const TableDesktop: FC = () => {
 						<th>Пример</th>
 					</motion.tr>
 				</thead>
-				<tbody className='text-center bg-white dark:bg-slate-800'>
+				<tbody className='text-center bg-white'>
 					{infoData.map(item => {
 						return (
 							<motion.tr

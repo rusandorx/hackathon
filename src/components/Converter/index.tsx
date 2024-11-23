@@ -1,82 +1,83 @@
-import { ChangeEvent, FC, useCallback, useRef } from 'react'
-import { FaArrowRightArrowLeft } from 'react-icons/fa6'
-import { debounce } from 'lodash'
+import {
+	ChangeEvent,
+	FC,
+	useCallback,
+	useRef,
+	useState,
+} from 'react'
+import { motion } from 'motion/react'
 
-import { ipPattern } from '../../utils'
-import { chechIpPattern } from '../../utils/regEx'
+import { inView } from '../../utils'
+import { opacityVariant } from '../../utils/animation'
 
 // interface IState {
 // 	ip: string
 // 	domen: string
 // }
 
+interface IData {
+	ip_or_domain: string[]
+}
+
 const Converter: FC = () => {
-	// const [state, setState] = useState<IState>({
-	// 	ip: '172.217.215.102',
-	// 	domen: 'google.com',
-	// })
+	const [value, setValue] = useState<string>('')
+	const [result, setResult] = useState<IData | null>({
+		ip_or_domain: [],
+	})
 
-	const ipRef = useRef<HTMLInputElement>()
-	const domenRef = useRef<HTMLInputElement>()
-
-	const submitIp = useCallback(
-		debounce((ip: string) => {
-			// console.log(ip)
-			//TODO fetch
-			// const data = fetch()
-			// domenRef.current.value = data
-		}, 1000),
-		[],
-	)
-
-	const submitDomen = useCallback(
-		debounce((domen: string) => {
-			// console.log(domen)
-			//TODO fetch
-			// const data = fetch()
-			// ipRef.current.value = data
-			// ipRef.current.value = ip
-		}, 1000),
-		[],
-	)
-
-	const ipChangeHandler = (
+	const changeHandler = (
 		e: ChangeEvent<HTMLInputElement>,
 	): void => {
-		// setState(prev => ({ ...prev, ip: e.target.value }))
-		if (!ipRef.current || !chechIpPattern(ipRef.current.value))
-			return
-		submitIp(ipRef.current?.value)
+		setValue(e.target.value)
 	}
 
-	const domenChangeHandler = (
-		e: ChangeEvent<HTMLInputElement>,
-	): void => {
-		// setState(prev => ({ ...prev, domen: e.target.value }))
-		submitDomen(domenRef.current?.value)
-	}
+	const submitHandler = useCallback(() => {
+		fetch(
+			`${
+				import.meta.env.VITE_API_BASE_URL ?? ''
+			}/convert/?ip_or_domain=${value}`,
+		)
+			.then(response => {
+				if (!response.ok) return
+				return response.json()
+			})
+			.then(data => {
+				console.log(data)
+				setResult(data)
+			})
+	}, [value])
 
 	return (
-		<div className='flex items-center gap-2 md:gap-4'>
-			<div className='flex flex-col max-w-[45%]'>
-				<span className='text-sm mb-1'>Домен</span>
+		<div className='grid sm:grid-cols-2 gap-5 sm:gap-16 w-full'>
+			<div className='flex flex-col gap-2 items-start sm:items-stretch'>
+				<span className='text-sm font-semibold'>Домен</span>
 				<input
-					onChange={domenChangeHandler}
-					defaultValue={'google.com'}
-					ref={domenRef}
-					className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
+					onChange={changeHandler}
+					value={value}
+					required
+					placeholder='google.com'
+					className='block border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
 				/>
+				<button
+					onClick={submitHandler}
+					className='w-[250px] sm:w-auto px-4 py-2 text-primary hover:text-white border border-primary hover:bg-primary font-medium rounded-md transition duration-150 ease-in-out'>
+					Конвертировать
+				</button>
 			</div>
-			<FaArrowRightArrowLeft className='mt-6 flex-shrink-0' />
-			<div className='flex flex-col max-w-[45%]'>
-				<span className='text-sm mb-1'>Ip</span>
-				<input
-					onChange={ipChangeHandler}
-					defaultValue={'172.217.215.102'}
-					pattern={ipPattern}
-					ref={ipRef}
-					className='border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2'
-				/>
+			<div className='flex flex-col gap-2 items-stretch'>
+				<span className='text-sm font-semibold'>
+					IP адреса и домены
+				</span>
+				<ul className='flex flex-col pl-5 list-disc gap-1'>
+					{result?.ip_or_domain.map((ip, index) => (
+						<motion.li
+							key={index}
+							{...inView}
+							variants={opacityVariant()}>
+							{ip}
+						</motion.li>
+					))}
+				</ul>
 			</div>
 		</div>
 	)

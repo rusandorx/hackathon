@@ -9,7 +9,7 @@ import styles from './index.module.scss'
 import { inView, fadeIn } from '../../utils'
 
 const Hero: FC = () => (
-	<section className='min-h-screen mt-24 text-secondary'>
+	<section className='overflow-hidden min-h-screen mt-24 text-secondary'>
 		<div className='flex items-center justify-between container mx-auto px-4 md:px-8 xl:px-16'>
 			<div className='flex-grow max-w-4xl'>
 				<motion.h1

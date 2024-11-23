@@ -30,7 +30,7 @@ const PortCard: FC<{ content: string }> = ({ content }) => {
 
 const Main: FC = () => {
 	return (
-		<main className='max-w-5xl mx-auto mt-8 px-4 flex flex-col items-center justify-start'>
+		<main className='overflow-hidden max-w-5xl mx-auto mt-8 px-4 flex flex-col items-center justify-start'>
 			<div className='text-secondary container w-full bg-white flex flex-col rounded-xl shadow p-4'>
 				<motion.h2
 					{...inView}
@@ -66,7 +66,7 @@ const Main: FC = () => {
 				<motion.div
 					{...inView}
 					variants={fadeIn('right', 'spring', 0.2, 1.5)}>
-					<p className='text-md sm:text-lg mb-4'>
+					<p className='text-md font-semibold sm:text-lg mb-4'>
 						Нужно конвертировать домен в ip или наоборот?
 					</p>
 					<Converter />

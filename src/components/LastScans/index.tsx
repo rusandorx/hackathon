@@ -11,7 +11,6 @@ const LastScans = () => {
   useEffect(() => {
     if (!lastScans.length) {
       fetch(`${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/last`, {
-        mode: "no-cors",
       })
         .then((response) => response.json())
         .then((lastScans) => {
