@@ -2,6 +2,9 @@ import { type FC, useRef, useState } from "react";
 import { Input } from "../";
 import { useNavigate } from "react-router-dom";
 import AdvancedSettingsModal from "../AdvancedSettingsModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { advancedSettingsSlice } from "../../store/slices";
 
 interface GetScanFormFields extends HTMLFormControlsCollection {
   ip?: HTMLInputElement;
@@ -23,6 +26,9 @@ const InputForm: FC = () => {
   const scanId = useRef<string | null>(null);
   const [customPorts, setCustomPorts] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const advancedSettings = useSelector(
+    (state: RootState) => state.advancedSettingsSlice.settings,
+  );
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCustomPorts(e.target.value === "custom");
@@ -70,6 +76,7 @@ const InputForm: FC = () => {
         {
           method: "POST",
           body: JSON.stringify({
+            ...advancedSettings,
             ip,
             top_range: portType === "custom" ? null : ports,
             specific_range: portType === "custom" ? ports : null,
@@ -159,4 +166,3 @@ const InputForm: FC = () => {
 };
 
 export default InputForm;
-

@@ -1,8 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setAdvancedSettings } from "../../store/slices/advancedSettingsSlice";
+import { BiCross } from "react-icons/bi";
+import { GrClose } from "react-icons/gr";
 
 interface AdvancedSettingsFormFields extends HTMLFormControlsCollection {
   scan_type: HTMLInputElement;
@@ -12,6 +14,7 @@ interface AdvancedSettingsFormFields extends HTMLFormControlsCollection {
   timing: HTMLInputElement;
   min_rate: HTMLInputElement;
   max_rate: HTMLInputElement;
+  version_all: HTMLInputElement;
 }
 
 interface AdvancedSettingsFormElements extends HTMLFormElement {
@@ -21,7 +24,7 @@ interface AdvancedSettingsFormElements extends HTMLFormElement {
 const AdvancedSettingsForm = ({ closeModal }: { closeModal: () => void }) => {
   const dispatch = useDispatch();
   const advancedSettings = useSelector(
-    (state: RootState) => state.advancedSettingsSlice,
+    (state: RootState) => state.advancedSettingsSlice.settings,
   );
   const [formState, setFormState] = useState(advancedSettings);
   const [error, setError] = useState<string | null>(null);
@@ -29,10 +32,10 @@ const AdvancedSettingsForm = ({ closeModal }: { closeModal: () => void }) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormState((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -59,23 +62,23 @@ const AdvancedSettingsForm = ({ closeModal }: { closeModal: () => void }) => {
       onSubmit={handleSubmit}
       className="bg-white rounded-lg p-6 w-96 text-black"
     >
-      <h2 className="text-xl font-semibold mb-4">Advanced Settings</h2>
+      <h2 className="text-xl font-semibold mb-4">Расширенные настройки</h2>
       <div className="flex flex-col gap-4">
         <label>
           Scan Type
           <select
             name="scan_type"
-            value={formState.scan_type}
+            defaultValue={advancedSettings.scan_type}
             onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 w-full"
           >
-            <option value="-sS">-sS</option>
-            <option value="-sT">-sT</option>
-            <option value="-sU">-sU</option>
-            <option value="-sA">-sA</option>
-            <option value="-sN">-sN</option>
-            <option value="-sF">-sF</option>
-            <option value="-sX">-sX</option>
+            {["-sS", "-sT", "-sU", "-sA", "-sN", "-sF", "-sX"].map(
+              (scanType) => (
+                <option key={scanType} value={scanType}>
+                  {scanType}
+                </option>
+              ),
+            )}
           </select>
         </label>
         <label>
@@ -156,6 +159,16 @@ const AdvancedSettingsForm = ({ closeModal }: { closeModal: () => void }) => {
             min={1}
           />
         </label>
+        <label>
+          <input
+            type="checkbox"
+            name="version_all"
+            checked={formState.version_all ?? false}
+            onChange={handleChange}
+            className="border border-gray-300 rounded-md px-3 py-2 mr-2"
+          />
+          Version All
+        </label>
         {error && <div className="text-red-500">{error}</div>}
       </div>
       <button
@@ -177,14 +190,38 @@ const AdvancedSettingsModal: FC<AdvancedSettingsModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-      <AdvancedSettingsForm closeModal={onClose} />
+      <div ref={modalRef} className="relative">
+        <button
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+          onClick={onClose}
+        >
+          <GrClose size={18} />
+        </button>
+        <AdvancedSettingsForm closeModal={onClose} />
+      </div>
     </div>,
     document.body,
   );
 };
 
 export default AdvancedSettingsModal;
+
