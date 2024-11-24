@@ -1,57 +1,46 @@
 import jsPDF from "jspdf";
+
 import "jspdf-autotable";
+
 // @ts-expect-error idk
 import { saveAs } from "file-saver";
-import { ScanData } from "../store/slices/scanSlice";
+import { IpData, Port, ScanData } from "../store/slices/scanSlice";
 
 export const createPDF = (scanData: ScanData) => {
   const doc = new jsPDF();
 
-  if (scanData) {
-    doc.text(`Task ID: ${scanData.task_id}`, 10, 10);
-    doc.text(`Status: ${scanData.end ? "Completed" : "In Progress"}`, 10, 20);
+  let currentY = 0;
+  if (scanData && scanData.ips) {
+    scanData.ips.forEach((ipData: IpData, index: number) => {
+      doc.text(`IP: ${ipData.ip}`, 10, ++currentY * 10);
+      doc.text(`PTR: ${ipData.ptr || "Unknown"}`, 10, ++currentY * 10);
 
-    scanData.ips.forEach((ipData, index) => {
-      const yOffset = 30 + index * 60;
-      doc.text(`IP: ${ipData.ip}`, 10, yOffset);
-      doc.text(`PTR: ${ipData.ptr}`, 10, yOffset + 10);
-
-      const tableData = ipData.ports.open.map((port) => [
+      const openPorts = ipData.ports.open.map((port: Port) => [
         port.port,
-        port.protocol ?? "N/A",
-        port.service ?? "N/A",
-        port.version ?? "N/A",
-        port.vulnerabilities?.map((vuln) => vuln.title).join(", ") ?? "N/A",
-        port.vulnerabilities?.map((vuln) => vuln.description).join(", ") ??
-          "N/A",
-        port.vulnerabilities?.map((vuln) => vuln.severity).join(", ") ?? "N/A",
+        port.protocol || "N/A",
+        port.service || "N/A",
+        port.version || "N/A",
+        port.vulnerabilities?.map((vul) => vul.title).join(", ") || "None",
       ]);
 
       // @ts-expect-error idk
       doc.autoTable({
-        startY: yOffset + 20,
-        head: [
-          [
-            "Port",
-            "Protocol",
-            "Service",
-            "Version",
-            "Vulnerabilities",
-            "Description",
-            "Severity",
-          ],
-        ],
-        body: tableData,
+        head: [["Port", "Protocol", "Service", "Version", "Vulnerabilities"]],
+        body: openPorts,
+        startY: ++currentY * 10,
       });
-
-      doc.text(
-        `Closed Ports: ${ipData.ports.closed.join(", ")}`,
-        10,
-        yOffset + 50,
-      );
+      currentY += openPorts.length;
+      if (ipData.ports.closed.length) {
+        doc.text(
+          `Closed Ports: ${ipData.ports.closed.join(", ")}`,
+          10,
+          ++currentY * 10,
+        );
+      }
+      currentY += 3;
     });
   } else {
-    doc.text("No scan data available", 10, 10);
+    doc.text("No data", 10, 10);
   }
 
   return doc;
