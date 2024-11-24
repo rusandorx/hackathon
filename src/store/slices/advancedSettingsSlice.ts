@@ -25,7 +25,7 @@ export const defaultState: AdvancedSettingsState = {
     timing: "-T3",
     min_rate: null,
     max_rate: null,
-    version_all: true,
+    version_all: false,
   },
 };
 
