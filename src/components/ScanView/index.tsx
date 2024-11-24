@@ -60,7 +60,7 @@ const ScanView = ({ id }: { id: string }) => {
   const dispatch = useDispatch();
   const scanState = useSelector((state: RootState) => state.scanSlice);
   const intervalId = useRef<number | null>(null);
-  const [expandedIp, setExpandedIp] = useState<string | null>(null);
+  const [expandedIps, setExpandedIps] = useState<string[]>([]);
 
   useEffect(() => {
     const stopLoading = (status: Status) => {
@@ -96,7 +96,9 @@ const ScanView = ({ id }: { id: string }) => {
   }, [dispatch, id]);
 
   const toggleExpand = (ip: string) => {
-    setExpandedIp(expandedIp === ip ? null : ip);
+    setExpandedIps((prev) =>
+      prev.includes(ip) ? prev.filter((item) => item !== ip) : [...prev, ip]
+    );
   };
 
   return (
@@ -125,7 +127,7 @@ const ScanView = ({ id }: { id: string }) => {
               )}
             </div>
             <p className="mb-2">PTR: {ipData.ptr || "Неизвестен"}</p>
-            {expandedIp === ipData.ip && (
+            {expandedIps.includes(ipData.ip) && (
               <div className="mb-2">
                 <PortList
                   open={ipData.ports.open}
@@ -139,4 +141,4 @@ const ScanView = ({ id }: { id: string }) => {
   );
 };
 
-export default ScanView;
+export default ScanView

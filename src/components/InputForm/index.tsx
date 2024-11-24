@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import AdvancedSettingsModal from "../AdvancedSettingsModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { advancedSettingsSlice } from "../../store/slices";
 
 interface GetScanFormFields extends HTMLFormControlsCollection {
   ip?: HTMLInputElement;

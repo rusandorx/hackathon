@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setAdvancedSettings } from "../../store/slices/advancedSettingsSlice";
-import { BiCross } from "react-icons/bi";
 import { GrClose } from "react-icons/gr";
 
 interface AdvancedSettingsFormFields extends HTMLFormControlsCollection {
@@ -32,6 +31,7 @@ const AdvancedSettingsForm = ({ closeModal }: { closeModal: () => void }) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
+    // @ts-expect-error doesn't matter
     const { name, value, type, checked } = e.target;
     setFormState((prevState) => ({
       ...prevState,
@@ -175,7 +175,7 @@ const AdvancedSettingsForm = ({ closeModal }: { closeModal: () => void }) => {
         type="submit"
         className="mt-4 px-4 py-2 text-white bg-primary hover:bg-primary-dark font-medium rounded-md transition duration-150 ease-in-out w-full"
       >
-        Save
+        Сохранить
       </button>
     </form>
   );
@@ -224,4 +224,3 @@ const AdvancedSettingsModal: FC<AdvancedSettingsModalProps> = ({
 };
 
 export default AdvancedSettingsModal;
-
