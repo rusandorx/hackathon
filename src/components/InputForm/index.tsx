@@ -65,22 +65,25 @@ const InputForm: FC = () => {
     const portType = elements.ports.value;
     const ports = elements["custom-ports"]?.value;
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
-      {
-        method: "POST",
-        body: JSON.stringify({ ip, portType, ports }),
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
+        {
+          method: "POST",
+          body: JSON.stringify({ ip, portType, ports }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      },
-    );
+      );
+      const taskId = (await response.json()).task_id;
 
-    const taskId = (await response.json()).task_id;
+      navigate(`/scans/${taskId}`);
 
-    navigate(`/scans/${taskId}`);
-
-    scanId.current = taskId;
+      scanId.current = taskId;
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

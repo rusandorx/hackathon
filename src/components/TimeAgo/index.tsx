@@ -1,4 +1,9 @@
-import { setDefaultOptions, formatDistanceToNow, parseISO } from "date-fns";
+import {
+  setDefaultOptions,
+  formatDistanceToNow,
+  parseISO,
+  addHours,
+} from "date-fns";
 import { ru } from "date-fns/locale";
 
 interface TimeAgoProps {
@@ -10,7 +15,8 @@ setDefaultOptions({ locale: ru });
 export const TimeAgo = ({ timestamp }: TimeAgoProps) => {
   let timeAgo = "";
   if (timestamp) {
-    const date = parseISO(timestamp);
+    let date = parseISO(timestamp);
+    date = addHours(date, 3);
     const timePeriod = formatDistanceToNow(date);
     timeAgo = `${timePeriod} назад`;
   }

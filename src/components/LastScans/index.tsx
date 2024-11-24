@@ -31,7 +31,7 @@ const LastScans = () => {
 
   return (
     <div className="absolute right-0 mt-2 w-96 bg-white border rounded shadow-lg py-2">
-      <div className="flex justify-center my-2">Последние сканы</div>
+      <div className="flex justify-center my-2 text-lg">Последние сканы</div>
       <ul className="flex gap-2 flex-col">
         {lastScans.map((scan) => (
           <li key={`${scan?.task_id}-${scan?.ip}`}>
