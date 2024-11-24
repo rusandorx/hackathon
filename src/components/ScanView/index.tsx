@@ -89,7 +89,7 @@ const ScanView = ({ id }: { id: string }) => {
     };
 
     dispatch(setScanStatus("loading"));
-    intervalId.current = setInterval(loadScan, 1000);
+    intervalId.current = setInterval(loadScan, 3000);
     loadScan();
 
     return () => {
@@ -147,4 +147,3 @@ const ScanView = ({ id }: { id: string }) => {
 };
 
 export default ScanView;
-
