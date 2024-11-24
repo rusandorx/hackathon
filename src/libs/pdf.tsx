@@ -11,10 +11,12 @@ export const createPDF = (scanData: ScanData) => {
 
   if (scanData && scanData.ips) {
     scanData.ips.forEach((ipData: IpData, index) => {
+      let currentY = 0;
       if (index !== 0) {
         doc.addPage("a4", "p");
+      } else {
+        doc.text(`Scan ID: ${scanData.task_id}`, 40, ++currentY * 10);
       }
-      let currentY = 0;
       doc.text(`IP: ${ipData.ip}`, 10, ++currentY * 10);
       doc.text(`PTR: ${ipData.ptr || "Unknown"}`, 10, ++currentY * 10);
 
@@ -46,6 +48,9 @@ export const createPDF = (scanData: ScanData) => {
 
 export const downloadPDF = (scanData: ScanData) => {
   const data = createPDF(scanData).output("arraybuffer");
-  saveAs(new Blob([data], { type: "application/pdf" }), "scan_report.pdf");
+  saveAs(
+    new Blob([data], { type: "application/pdf" }),
+    `${scanData?.task_id}.pdf`,
+  );
 };
 
