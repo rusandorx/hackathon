@@ -87,6 +87,9 @@ const InputForm: FC = () => {
         },
       );
       const taskId = (await response.json()).task_id;
+      if (!taskId) {
+        throw Error("task id is undefined");
+      }
 
       navigate(`/scans/${taskId}`);
 
