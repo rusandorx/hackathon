@@ -26,7 +26,7 @@ export interface IpData {
 export type ScanData = null | {
   task_id: string;
   end: boolean;
-  ips: IpData[];
+  ip: string;
 };
 
 export type Status = "idle" | "loading" | "done";

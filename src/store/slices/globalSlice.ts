@@ -1,9 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ScanData } from "./scanSlice";
+
+export interface LastScan {
+  task_id: string;
+  ip: string;
+  updated_at: string;
+}
 
 export interface globalState {
-  lastScans: ScanData[];
+  lastScans: LastScan[];
 }
 
 const defaultState: globalState = {
@@ -16,7 +21,7 @@ export const globalSlice = createSlice({
   name: "globalSlice",
   initialState,
   reducers: {
-    setLastScans: (state, action: PayloadAction<ScanData[]>) => {
+    setLastScans: (state, action: PayloadAction<LastScan[]>) => {
       state.lastScans = action.payload;
     },
   },
