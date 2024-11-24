@@ -177,7 +177,7 @@ const AdvancedSettingsForm = ({
 						onChange={handleChange}
 						className='border border-gray-300 rounded-md px-3 py-2 mr-2'
 					/>
-					Version All
+					Все версии
 				</label>
 				{error && <div className='text-red-500'>{error}</div>}
 			</div>
