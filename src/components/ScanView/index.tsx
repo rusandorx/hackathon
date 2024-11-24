@@ -13,7 +13,7 @@ const Indicator = ({ status }: { status: Status }) => {
   if (status === "idle") return null;
   if (status === "done")
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mb-4">
         <svg
           className="w-6 h-6 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
           aria-hidden="true"
@@ -48,7 +48,7 @@ const Indicator = ({ status }: { status: Status }) => {
           </svg>
           <span className="sr-only">Loading...</span>
         </div>
-        <span className="text-2xl">Сканируем ip...</span>
+        <span className="text-2xl">Сканируем IP...</span>
       </div>
     );
 };
@@ -92,7 +92,7 @@ const ScanView = ({ id }: { id: string }) => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 w-full">
       <Indicator status={scanState.status} />
       {scanState.data?.ips.map((ipData) => (
         <div
@@ -114,4 +114,3 @@ const ScanView = ({ id }: { id: string }) => {
 };
 
 export default ScanView;
-

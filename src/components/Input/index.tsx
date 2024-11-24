@@ -1,7 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import Typewriter from "typewriter-effect/dist/core";
-import { ipPattern } from "../../utils";
 import { multipleIpPattern } from "../../utils/regEx";
 
 const inputExamples = [
@@ -149,14 +148,24 @@ const Input: FC = () => {
             required
           />
           <span className="text-3xl font-light">/</span>
-          <input
-            type="text"
+          <select
             id="ip-cidr-byte"
-            placeholder="24"
             name="ip-byte"
             className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
             required
-          />
+          >
+            {Array(33)
+              .fill(0)
+              .map((v, i) => i)
+              .slice(25, 33)
+              .map((v: number) => {
+                return (
+                  <option key={v} value={v.toString()}>
+                    {v}
+                  </option>
+                );
+              })}
+          </select>
         </div>
       )}
     </>

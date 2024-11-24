@@ -86,3 +86,4 @@ const PortList = ({ open, closed }: { open: Port[]; closed: number[] }) => {
 };
 
 export default PortList;
+

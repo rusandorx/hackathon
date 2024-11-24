@@ -10,7 +10,7 @@ interface GetScanFormFields extends HTMLFormControlsCollection {
   "ip-start"?: HTMLInputElement;
   "ip-end"?: HTMLInputElement;
   "ip-mask"?: HTMLInputElement;
-  "ip-byte"?: HTMLInputElement;
+  "ip-byte"?: HTMLSelectElement;
   "ip-format": HTMLInputElement;
   ports: HTMLInputElement;
   "custom-ports"?: HTMLInputElement;
@@ -39,7 +39,7 @@ const InputForm: FC = () => {
     const ipStart = elements["ip-start"]?.value;
     const ipEnd = elements["ip-end"]?.value;
     const ipMask = elements["ip-mask"]?.value;
-    const ipByte = elements["ip-byte"]?.value;
+    const ipByte = elements["ip-byte"]?.value.toString();
 
     let ip: string;
 
@@ -105,14 +105,14 @@ const InputForm: FC = () => {
             <option value="10">Топ 10 портов</option>
             <option value="100">Топ 100 портов</option>
             <option value="1000">Топ 1000 портов</option>
-            <option value="custom">Указать через пробел</option>
+            <option value="custom">Указать свои порты</option>
           </select>
           {customPorts && (
             <input
               id="custom-ports"
               pattern="(\d+\s?)+"
               name="custom-ports"
-              placeholder="80 443 8080"
+              placeholder="1-80 100-200 8080"
               className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mt-2"
               required
             />
