@@ -9,6 +9,7 @@ import {
   Status,
 } from "../../store/slices/scanSlice";
 import { ipToNumber } from "../../utils/ipToNumber";
+import { downloadPDF } from "../../libs/pdf.tsx";
 
 const Indicator = ({ status }: { status: Status }) => {
   if (status === "idle" || status === "done")
@@ -99,6 +100,11 @@ const ScanView = ({ id }: { id: string }) => {
   return (
     <div className="p-4 w-full">
       <Indicator status={scanState.status} />
+      {scanState.status === "done" && (
+        <button onClick={() => downloadPDF(scanState.data)}>
+          Download as PDF
+        </button>
+      )}
       {scanState.data?.ips
         .slice()
         .sort((a, b) => ipToNumber(a.ip) - ipToNumber(b.ip))
@@ -109,7 +115,7 @@ const ScanView = ({ id }: { id: string }) => {
             onClick={() => toggleExpand(ipData.ip)}
           >
             <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
-            <p className="mb-2">PTR: {ipData.ptr}</p>
+            <p className="mb-2">PTR: {ipData.ptr || "Неизвестен"}</p>
             {expandedIp === ipData.ip && (
               <div className="mb-2">
                 <PortList

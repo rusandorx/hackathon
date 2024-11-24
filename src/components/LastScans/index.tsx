@@ -34,7 +34,7 @@ const LastScans = () => {
       <div className="flex justify-center my-2">Последние сканы</div>
       <ul className="flex gap-2 flex-col">
         {lastScans.map((scan) => (
-          <li key={scan?.task_id}>
+          <li key={`${scan?.task_id}-${scan?.ip}`}>
             <Link to={`/scans/${scan?.task_id}`}>
               <div className="flex justify-around my-2">
                 {scan?.ip}
