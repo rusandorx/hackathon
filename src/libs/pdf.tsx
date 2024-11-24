@@ -23,12 +23,14 @@ export const createPDF = (scanData: ScanData) => {
         port.vulnerabilities?.map((vul) => vul.title).join(", ") || "None",
       ]);
 
-      // @ts-expect-error idk
-      doc.autoTable({
-        head: [["Port", "Protocol", "Service", "Version", "Vulnerabilities"]],
-        body: openPorts,
-        startY: ++currentY * 10,
-      });
+      if (openPorts.length) {
+        // @ts-expect-error idk
+        doc.autoTable({
+          head: [["Port", "Protocol", "Service", "Version", "Vulnerabilities"]],
+          body: openPorts,
+          startY: ++currentY * 10,
+        });
+      }
       currentY += openPorts.length;
       if (ipData.ports.closed.length) {
         doc.text(

@@ -122,7 +122,7 @@ const InputForm: FC = () => {
             <input
               id="custom-ports"
               name="custom-ports"
-              placeholder="1-80 100-200 8080"
+              placeholder="1-40"
               className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mt-2 w-full"
               required
             />
