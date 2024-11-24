@@ -21,7 +21,6 @@ interface GetScanFormElements extends HTMLFormElement {
 }
 
 const InputForm: FC = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const scanId = useRef<string | null>(null);
   const [customPorts, setCustomPorts] = useState(false);
@@ -77,7 +76,6 @@ const InputForm: FC = () => {
       },
     );
 
-    dispatch(setScanStatus("loading"));
     const taskId = (await response.json()).task_id;
 
     navigate(`/scans/${taskId}`);

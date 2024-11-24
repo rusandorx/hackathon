@@ -60,12 +60,12 @@ const ScanView = ({ id }: { id: string }) => {
   const [expandedIp, setExpandedIp] = useState<string | null>(null);
 
   useEffect(() => {
-    const stopLoading = () => {
+    const stopLoading = (status: Status) => {
       if (intervalId.current !== null) {
         clearInterval(intervalId.current);
       }
       intervalId.current = null;
-      dispatch(setScanStatus("done"));
+      dispatch(setScanStatus(status));
     };
 
     const loadScan = async () => {
@@ -77,14 +77,19 @@ const ScanView = ({ id }: { id: string }) => {
       dispatch(setScanData(scanData));
 
       if (scanData?.end) {
-        stopLoading();
+        stopLoading("done");
       }
 
       return scanData;
     };
 
+    dispatch(setScanStatus("loading"));
     intervalId.current = setInterval(loadScan, 1000);
     loadScan();
+
+    return () => {
+      stopLoading("idle");
+    };
   }, [dispatch, id]);
 
   const toggleExpand = (ip: string) => {
