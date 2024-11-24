@@ -20,7 +20,7 @@ const YourIp: FC = () => {
   if (!fetching)
     return (
       <div className="text-md font-semibold">
-        Your IP is&nbsp;
+        Ваш IP &nbsp;
         <code className="bg-slate-500/20 p-0.5 mx-0.5 rounded cursor-pointer hover:bg-slate-500/30">
           {localIp}
         </code>

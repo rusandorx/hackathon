@@ -11,7 +11,6 @@ export const TimeAgo = ({ timestamp }: TimeAgoProps) => {
   let timeAgo = "";
   if (timestamp) {
     const date = parseISO(timestamp);
-    console.log(date);
     const timePeriod = formatDistanceToNow(date);
     timeAgo = `${timePeriod} назад`;
   }
