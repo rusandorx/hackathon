@@ -5,7 +5,7 @@ const YourIp: FC = () => {
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
-    fetch("https://api-bdc.net/data/client-ip")
+    fetch("https://api-bdc.net/data/client-ip/")
       .then((response) => {
         if (!response.ok) return;
         return response.json();

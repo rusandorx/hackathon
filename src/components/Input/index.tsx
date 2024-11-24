@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-
+// @ts-expect-error jjj
 import Typewriter from "typewriter-effect/dist/core";
 import { multipleIpPattern } from "../../utils/regEx";
 
@@ -41,12 +41,12 @@ const Input: FC = () => {
 
   return (
     <>
-      <div className="mb-4">
-        <label className="font-semibold mr-2 flex justify-center">
+      <div className="mb-4 w-full">
+        <label className="font-semibold mr-2 mb-2 flex justify-center">
           Выберите формат IP адреса
         </label>
-        <div className="flex gap-4">
-          <label className="flex items-center gap-2">
+        <div className="flex gap-4 justify-around">
+          <label className="flex  items-center gap-2">
             <input
               type="radio"
               name="ip-format"
@@ -97,11 +97,10 @@ const Input: FC = () => {
         <input
           type="text"
           id="ip-address"
-          // pattern={ipPattern}
           ref={input}
           placeholder=" "
           name="ip"
-          className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+          className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
           required
         />
       )}
@@ -111,19 +110,19 @@ const Input: FC = () => {
           ref={input}
           placeholder=" "
           name="ip"
-          className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+          className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
           required
         />
       )}
       {ipFormat === "range" && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full">
           <input
             type="text"
             id="ip-range-start"
             ref={input}
             placeholder=" "
             name="ip-start"
-            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
             required
           />
           <span className="text-3xl font-light">-</span>
@@ -131,32 +130,32 @@ const Input: FC = () => {
             type="text"
             id="ip-range-end"
             name="ip-end"
-            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
             required
           />
         </div>
       )}
       {ipFormat === "cidr" && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full">
           <input
             type="text"
             id="ip-cidr-mask"
             ref={input}
             placeholder=" "
             name="ip-mask"
-            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
             required
           />
           <span className="text-3xl font-light">/</span>
           <select
             id="ip-cidr-byte"
             name="ip-byte"
-            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
             required
           >
             {Array(33)
               .fill(0)
-              .map((v, i) => i)
+              .map((_: number, i) => i)
               .slice(25, 33)
               .map((v: number) => {
                 return (

@@ -27,7 +27,7 @@ const Converter: FC = () => {
     fetch(
       `${
         import.meta.env.VITE_API_BASE_URL ?? ""
-      }/convert/?ip_or_domain=${value}`,
+      }/convert/?ip_or_domain=${value}/`,
     )
       .then((response) => {
         if (!response.ok) return;

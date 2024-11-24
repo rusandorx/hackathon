@@ -16,7 +16,7 @@ const LastScans = () => {
   useEffect(() => {
     const fetchLastScans = async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/last`,
+        `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/last/`,
       );
       const lastScans = await response.json();
       dispatch(setLastScans(lastScans));

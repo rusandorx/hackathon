@@ -1,7 +1,7 @@
 import { type FC, useRef, useState } from "react";
-
 import { Input } from "../";
 import { useNavigate } from "react-router-dom";
+import AdvancedSettingsModal from "../AdvancedSettingsModal";
 
 interface GetScanFormFields extends HTMLFormControlsCollection {
   ip?: HTMLInputElement;
@@ -22,6 +22,7 @@ const InputForm: FC = () => {
   const navigate = useNavigate();
   const scanId = useRef<string | null>(null);
   const [customPorts, setCustomPorts] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCustomPorts(e.target.value === "custom");
@@ -68,7 +69,12 @@ const InputForm: FC = () => {
         `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
         {
           method: "POST",
-          body: JSON.stringify({ ip, portType, ports }),
+          body: JSON.stringify({
+            ip,
+            top_range: portType === "custom" ? null : ports,
+            specific_range: portType === "custom" ? ports : null,
+            port_range: portType === "custom" ? "-p" : null,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -87,19 +93,19 @@ const InputForm: FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-center justify-center rounded-md p-4"
+      className="flex flex-col items-center justify-center rounded-md p-6 my-2 bg-white border max-w-lg mx-auto"
     >
-      <div className="flex flex-col items-center flex-grow gap-2 w-full">
+      <div className="flex flex-col items-start flex-grow gap-4 w-full">
         <Input />
-        <div className="flex flex-col items-center w-full">
-          <label htmlFor="ports" className="font-semibold mr-2">
+        <div className="flex flex-col items-start w-full">
+          <label htmlFor="ports" className="font-semibold mb-2">
             Выберите порты
           </label>
           <select
             id="ports"
             name="ports"
             onChange={handleSelectChange}
-            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
           >
             <option value="10">Топ 10 портов</option>
             <option value="100">Топ 100 портов</option>
@@ -109,35 +115,48 @@ const InputForm: FC = () => {
           {customPorts && (
             <input
               id="custom-ports"
-              pattern="(\d+\s?)+"
               name="custom-ports"
               placeholder="1-80 100-200 8080"
-              className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mt-2"
+              className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 mt-2 w-full"
               required
             />
           )}
         </div>
-        <div className="flex flex-col items-center w-full">
-          <label htmlFor="location">Выберите локацию</label>
+        <div className="flex flex-col items-start w-full">
+          <label htmlFor="location" className="font-semibold mb-2">
+            Выберите локацию
+          </label>
           <select
             id="location"
             name="location"
             onChange={handleSelectChange}
-            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
           >
             <option value="Rtu Mirea">РТУ Мирэа</option>
             <option value="Localhost">Localhost</option>
           </select>
         </div>
         <button
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+          className="px-4 py-2 text-white bg-secondary hover:bg-secondary-dark font-medium rounded-md transition duration-150 ease-in-out w-full mb-4"
+        >
+          Расширенные настройки
+        </button>
+        <button
           type="submit"
-          className="ml-2 px-4 py-2 text-primary hover:text-white border border-primary hover:bg-primary font-medium rounded-md transition duration-150 ease-in-out"
+          className="px-4 py-2 text-white bg-primary hover:bg-primary-dark font-medium rounded-md transition duration-150 ease-in-out w-full"
         >
           Сканировать
         </button>
       </div>
+      <AdvancedSettingsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </form>
   );
 };
 
 export default InputForm;
+

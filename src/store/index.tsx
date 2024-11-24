@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { globalSlice, scanSlice } from "./slices";
+import { advancedSettingsSlice, globalSlice, scanSlice } from "./slices";
 
 export const store = configureStore({
   reducer: {
     globalSlice,
     scanSlice,
+    advancedSettingsSlice,
   },
 });
 

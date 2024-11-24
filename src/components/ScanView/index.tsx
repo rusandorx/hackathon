@@ -10,7 +10,7 @@ import {
 } from "../../store/slices/scanSlice";
 import { ipToNumber } from "../../utils/ipToNumber";
 import { downloadPDF } from "../../libs/pdf.tsx";
-import { BiCheck, BiLoader } from "react-icons/bi";
+import { BiLoader } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa6";
 
 const Indicator = ({ status }: { status: Status }) => {
@@ -73,7 +73,7 @@ const ScanView = ({ id }: { id: string }) => {
 
     const loadScan = async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/${id}/`,
       );
       const scanData: ScanData = await response.json();
 
