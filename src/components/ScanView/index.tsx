@@ -10,6 +10,8 @@ import {
 } from "../../store/slices/scanSlice";
 import { ipToNumber } from "../../utils/ipToNumber";
 import { downloadPDF } from "../../libs/pdf.tsx";
+import { BiCheck, BiLoader } from "react-icons/bi";
+import { FaCheck } from "react-icons/fa6";
 
 const Indicator = ({ status }: { status: Status }) => {
   if (status === "idle" || status === "done")
@@ -114,7 +116,14 @@ const ScanView = ({ id }: { id: string }) => {
             className="mb-4 p-4 border rounded-md shadow-md hover:cursor-pointer bg-white"
             onClick={() => toggleExpand(ipData.ip)}
           >
-            <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
+              {ipData.end ? (
+                <FaCheck className="mb-2" size={24} />
+              ) : (
+                <BiLoader className="mb-2" size={24} />
+              )}
+            </div>
             <p className="mb-2">PTR: {ipData.ptr || "Неизвестен"}</p>
             {expandedIp === ipData.ip && (
               <div className="mb-2">

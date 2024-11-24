@@ -21,6 +21,7 @@ export interface IpData {
     open: Port[];
     closed: number[];
   };
+  end: boolean;
 }
 
 export type ScanData = null | {
