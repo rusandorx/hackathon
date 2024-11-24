@@ -12,6 +12,8 @@ import { ipToNumber } from "../../utils/ipToNumber";
 import { downloadPDF } from "../../libs/pdf.tsx";
 import { BiLoader } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa6";
+import classNames from "classnames";
+import styles from "./index.module.scss";
 
 const Indicator = ({ status }: { status: Status }) => {
   if (status === "idle" || status === "done")
@@ -97,7 +99,7 @@ const ScanView = ({ id }: { id: string }) => {
 
   const toggleExpand = (ip: string) => {
     setExpandedIps((prev) =>
-      prev.includes(ip) ? prev.filter((item) => item !== ip) : [...prev, ip]
+      prev.includes(ip) ? prev.filter((item) => item !== ip) : [...prev, ip],
     );
   };
 
@@ -123,7 +125,10 @@ const ScanView = ({ id }: { id: string }) => {
               {ipData.end ? (
                 <FaCheck className="mb-2" size={24} />
               ) : (
-                <BiLoader className="mb-2" size={24} />
+                <BiLoader
+                  className={classNames("mb-2", styles.spinner)}
+                  size={24}
+                />
               )}
             </div>
             <p className="mb-2">PTR: {ipData.ptr || "Неизвестен"}</p>
@@ -141,4 +146,5 @@ const ScanView = ({ id }: { id: string }) => {
   );
 };
 
-export default ScanView
+export default ScanView;
+

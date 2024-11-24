@@ -75,7 +75,10 @@ const TableDesktop: FC = () => {
                 </td>
                 <td>{item.description}</td>
                 <td>
-                  <code className="bg-slate-500/20 p-0.5 mx-0.5 rounded cursor-pointer hover:bg-slate-500/30">
+                  <code
+                    className="bg-slate-500/20 p-0.5 mx-0.5 rounded cursor-pointer hover:bg-slate-500/30"
+                    onClick={() => navigator.clipboard.writeText(item.example)}
+                  >
                     {item.example}
                   </code>
                 </td>

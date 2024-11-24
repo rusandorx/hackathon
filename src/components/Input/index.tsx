@@ -1,43 +1,9 @@
-import { FC, useCallback, useEffect, useRef, useState } from "react";
-// @ts-expect-error jjj
-import Typewriter from "typewriter-effect/dist/core";
+import { FC, useCallback, useRef, useState } from "react";
 import { multipleIpPattern } from "../../utils/regEx";
-
-const inputExamples = [
-  "192.168.1.0",
-  "Google.com",
-  "0.0.0.0-255.255.255.255",
-  "172.31.0.0/16",
-];
 
 const Input: FC = () => {
   const input = useRef<HTMLInputElement | null>(null);
   const [ipFormat, setIpFormat] = useState<string>("single");
-
-  const customNodeCreator = useCallback((character: unknown) => {
-    if (input.current?.placeholder) {
-      input.current.placeholder = input.current.placeholder + character;
-    }
-    return null;
-  }, []);
-
-  const onRemoveNode = useCallback(() => {
-    if (input.current?.placeholder) {
-      input.current.placeholder = input.current?.placeholder.slice(0, -1);
-      input.current.placeholder = " ";
-    }
-  }, []);
-
-  useEffect(() => {
-    new Typewriter(null, {
-      strings: inputExamples,
-      autoStart: true,
-      loop: true,
-      delay: 75,
-      onCreateTextNode: customNodeCreator,
-      onRemoveNode: onRemoveNode,
-    });
-  }, [customNodeCreator, onRemoveNode]);
 
   return (
     <>
@@ -98,7 +64,7 @@ const Input: FC = () => {
           type="text"
           id="ip-address"
           ref={input}
-          placeholder=" "
+          placeholder="192.168.0.1"
           name="ip"
           className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
           required
@@ -108,7 +74,7 @@ const Input: FC = () => {
         <input
           id="ip-address"
           ref={input}
-          placeholder=" "
+          placeholder="192.168.0.1 192.168.0.2"
           name="ip"
           className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
           required
@@ -120,7 +86,7 @@ const Input: FC = () => {
             type="text"
             id="ip-range-start"
             ref={input}
-            placeholder=" "
+            placeholder="192.168.0.0"
             name="ip-start"
             className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
             required
@@ -128,6 +94,7 @@ const Input: FC = () => {
           <span className="text-3xl font-light">-</span>
           <input
             type="text"
+            placeholder="192.168.0.155"
             id="ip-range-end"
             name="ip-end"
             className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
@@ -141,7 +108,7 @@ const Input: FC = () => {
             type="text"
             id="ip-cidr-mask"
             ref={input}
-            placeholder=" "
+            placeholder="192.168.0.255"
             name="ip-mask"
             className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2 w-full"
             required
