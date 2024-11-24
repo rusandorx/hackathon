@@ -50,7 +50,7 @@ const InputForm: FC = () => {
         break;
       }
       case "range": {
-        ip = ipStart + "-" + ipEnd;
+        ip = ipStart + ":" + ipEnd;
         break;
       }
       case "cidr": {

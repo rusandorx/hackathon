@@ -8,10 +8,10 @@ import {
   setScanStatus,
   Status,
 } from "../../store/slices/scanSlice";
+import { ipToNumber } from "../../utils/ipToNumber";
 
 const Indicator = ({ status }: { status: Status }) => {
-  if (status === "idle") return null;
-  if (status === "done")
+  if (status === "idle" || status === "done")
     return (
       <div className="flex items-center justify-center mb-4">
         <svg
@@ -94,21 +94,27 @@ const ScanView = ({ id }: { id: string }) => {
   return (
     <div className="p-4 w-full">
       <Indicator status={scanState.status} />
-      {scanState.data?.ips.map((ipData) => (
-        <div
-          key={ipData.ip}
-          className="mb-4 p-4 border rounded-md shadow-md hover:cursor-pointer bg-white"
-          onClick={() => toggleExpand(ipData.ip)}
-        >
-          <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
-          <p className="mb-2">PTR: {ipData.ptr}</p>
-          {expandedIp === ipData.ip && (
-            <div className="mb-2">
-              <PortList open={ipData.ports.open} closed={ipData.ports.closed} />
-            </div>
-          )}
-        </div>
-      ))}
+      {scanState.data?.ips
+        .slice()
+        .sort((a, b) => ipToNumber(a.ip) - ipToNumber(b.ip))
+        .map((ipData) => (
+          <div
+            key={ipData.ip}
+            className="mb-4 p-4 border rounded-md shadow-md hover:cursor-pointer bg-white"
+            onClick={() => toggleExpand(ipData.ip)}
+          >
+            <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
+            <p className="mb-2">PTR: {ipData.ptr}</p>
+            {expandedIp === ipData.ip && (
+              <div className="mb-2">
+                <PortList
+                  open={ipData.ports.open}
+                  closed={ipData.ports.closed}
+                />
+              </div>
+            )}
+          </div>
+        ))}
     </div>
   );
 };
