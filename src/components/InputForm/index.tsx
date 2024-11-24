@@ -119,6 +119,18 @@ const InputForm: FC = () => {
             />
           )}
         </div>
+        <div className="flex flex-col items-center w-full">
+          <label htmlFor="location">Выберите локацию</label>
+          <select
+            id="location"
+            name="location"
+            onChange={handleSelectChange}
+            className="border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary rounded-md px-3 py-2"
+          >
+            <option value="Rtu Mirea">РТУ Мирэа</option>
+            <option value="Localhost">Localhost</option>
+          </select>
+        </div>
         <button
           type="submit"
           className="ml-2 px-4 py-2 text-primary hover:text-white border border-primary hover:bg-primary font-medium rounded-md transition duration-150 ease-in-out"
