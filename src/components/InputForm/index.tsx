@@ -1,8 +1,6 @@
 import { type FC, useRef, useState } from "react";
 
 import { Input } from "../";
-import { setScanStatus } from "../../store/slices/scanSlice";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface GetScanFormFields extends HTMLFormControlsCollection {
