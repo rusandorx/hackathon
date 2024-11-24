@@ -9,7 +9,7 @@ import { IpData, Port, ScanData } from "../store/slices/scanSlice";
 export const createPDF = (scanData: ScanData) => {
   const doc = new jsPDF();
 
-  let currentY = 0;
+  let currentY = 3;
   if (scanData && scanData.ips) {
     scanData.ips.forEach((ipData: IpData, index: number) => {
       doc.text(`IP: ${ipData.ip}`, 10, ++currentY * 10);

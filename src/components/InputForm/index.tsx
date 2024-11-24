@@ -77,7 +77,7 @@ const InputForm: FC = () => {
           body: JSON.stringify({
             ...advancedSettings,
             ip,
-            top_range: portType === "custom" ? null : ports,
+            top_range: portType === "custom" ? null : parseInt(portType),
             specific_range: portType === "custom" ? ports : null,
             port_range: portType === "custom" ? "-p" : null,
           }),
