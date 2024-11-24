@@ -70,14 +70,6 @@ const InputForm: FC = () => {
     const ports = elements["custom-ports"]?.value;
 
     try {
-      console.log(portType, ports);
-      console.log({
-        ...advancedSettings,
-        ip,
-        top_range: portType === "custom" ? null : portType,
-        specific_range: portType === "custom" ? ports : null,
-        port_range: portType === "custom" ? "-p" : null,
-      });
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL ?? ""}/scans/`,
         {
