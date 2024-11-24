@@ -1,58 +1,44 @@
 import jsPDF from "jspdf";
-import { IpData, Port, ScanData } from "../store/slices/scanSlice";
-// @ts-expect-error ffg
+
+import "jspdf-autotable";
+
+// @ts-expect-error idk
 import { saveAs } from "file-saver";
+import { IpData, Port, ScanData } from "../store/slices/scanSlice";
 
 export const createPDF = (scanData: ScanData) => {
   const doc = new jsPDF();
-  let currentY = 10;
 
   if (scanData && scanData.ips) {
-    scanData.ips.forEach((ipData: IpData) => {
-      doc.text(`IP: ${ipData.ip}`, 10, currentY);
-      currentY += 10;
-      doc.text(`PTR: ${ipData.ptr || "Unknown"}`, 10, currentY);
-      currentY += 10;
+    scanData.ips.forEach((ipData: IpData, index) => {
+      if (index !== 0) {
+        doc.addPage("a4", "p");
+      }
+      let currentY = 0;
+      doc.text(`IP: ${ipData.ip}`, 10, ++currentY * 10);
+      doc.text(`PTR: ${ipData.ptr || "Unknown"}`, 10, ++currentY * 10);
 
-      const openPorts = ipData.ports.open;
+      const openPorts = ipData.ports.open.map((port: Port) => [
+        port.port,
+        port.protocol || "N/A",
+        port.service || "N/A",
+        port.version || "N/A",
+        port.vulnerabilities?.map((vul) => vul.title).join(", ") || "None",
+      ]);
 
       if (openPorts.length) {
-        // Draw table header
-        doc.text("Port", 10, currentY);
-        doc.text("Protocol", 30, currentY);
-        doc.text("Service", 60, currentY);
-        doc.text("Version", 90, currentY);
-        doc.text("Vulnerabilities", 120, currentY);
-        currentY += 10;
-
-        // Draw table rows
-        openPorts.forEach((port: Port) => {
-          doc.text(port.port.toString(), 10, currentY);
-          doc.text(port.protocol || "N/A", 30, currentY);
-          doc.text(port.service || "N/A", 60, currentY);
-          doc.text(port.version || "N/A", 90, currentY);
-          doc.text(
-            port.vulnerabilities?.map((vul) => vul.title).join(", ") || "None",
-            120,
-            currentY,
-          );
-          currentY += 10;
+        // @ts-expect-error idk
+        doc.autoTable({
+          head: [["Port", "Protocol", "Service", "Version", "Vulnerabilities"]],
+          body: openPorts,
+          startY: ++currentY * 10,
         });
+      } else {
+        doc.text("Could not found any open ports", 15, ++currentY * 10);
       }
-
-      if (ipData.ports.closed.length) {
-        doc.text(
-          `Closed Ports: ${ipData.ports.closed.join(", ")}`,
-          10,
-          currentY,
-        );
-        currentY += 10;
-      }
-
-      currentY += 10; // Add some space before the next IP
     });
   } else {
-    doc.text("No data", 10, currentY);
+    doc.text("No data", 10, 10);
   }
 
   return doc;
@@ -62,3 +48,4 @@ export const downloadPDF = (scanData: ScanData) => {
   const data = createPDF(scanData).output("arraybuffer");
   saveAs(new Blob([data], { type: "application/pdf" }), "scan_report.pdf");
 };
+
