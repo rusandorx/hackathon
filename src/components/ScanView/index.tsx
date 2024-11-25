@@ -11,7 +11,7 @@ import {
 import { ipToNumber } from "../../utils/ipToNumber";
 import { downloadPDF } from "../../libs/pdf.tsx";
 import { BiLoader } from "react-icons/bi";
-import { FaCheck } from "react-icons/fa6";
+import { FaCheck, FaCircle } from "react-icons/fa6";
 import classNames from "classnames";
 import styles from "./index.module.scss";
 
@@ -120,16 +120,26 @@ const ScanView = ({ id }: { id: string }) => {
             className="mb-4 p-4 border rounded-md shadow-md hover:cursor-pointer bg-white"
             onClick={() => toggleExpand(ipData.ip)}
           >
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
-              {ipData.end ? (
-                <FaCheck className="mb-2" size={24} />
-              ) : (
-                <BiLoader
-                  className={classNames("mb-2", styles.spinner)}
-                  size={24}
-                />
-              )}
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-bold mb-2">IP: {ipData.ip}</h2>
+                {ipData.end ? (
+                  <FaCheck className="mb-2" size={24} />
+                ) : (
+                  <BiLoader
+                    className={classNames("mb-2", styles.spinner)}
+                    size={24}
+                  />
+                )}
+              </div>
+              <div className="flex gap-2">
+                <div className="flex justify-center items-center rounded-full w-9 h-9 p-2 border bg-emerald-500">
+                  {ipData.ports.open.length}
+                </div>
+                <div className="flex justify-center items-center rounded-full w-9 h-9 p-2 border bg-rose-500">
+                  {ipData.ports.closed.length}
+                </div>
+              </div>
             </div>
             <p className="mb-2">PTR: {ipData.ptr || "Неизвестен"}</p>
             {expandedIps.includes(ipData.ip) && (
